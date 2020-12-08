@@ -1,31 +1,30 @@
-/****************************************************************************
- *
- * t1types.h
- *
- *   Basic Type1/Type2 type definitions and interface (specification
- *   only).
- *
- * Copyright (C) 1996-2019 by
- * David Turner, Robert Wilhelm, and Werner Lemberg.
- *
- * This file is part of the FreeType project, and may only be used,
- * modified, and distributed under the terms of the FreeType project
- * license, LICENSE.TXT.  By continuing to use, modify, or distribute
- * this file you indicate that you have read the license and
- * understand and accept it fully.
- *
- */
+/***************************************************************************/
+/*                                                                         */
+/*  t1types.h                                                              */
+/*                                                                         */
+/*    Basic Type1/Type2 type definitions and interface (specification      */
+/*    only).                                                               */
+/*                                                                         */
+/*  Copyright 1996-2004, 2006, 2008, 2009, 2011 by                         */
+/*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
+/*                                                                         */
+/*  This file is part of the FreeType project, and may only be used,       */
+/*  modified, and distributed under the terms of the FreeType project      */
+/*  license, LICENSE.TXT.  By continuing to use, modify, or distribute     */
+/*  this file you indicate that you have read the license and              */
+/*  understand and accept it fully.                                        */
+/*                                                                         */
+/***************************************************************************/
 
 
-#ifndef T1TYPES_H_
-#define T1TYPES_H_
+#ifndef __T1TYPES_H__
+#define __T1TYPES_H__
 
 
 #include <ft2build.h>
 #include FT_TYPE1_TABLES_H
 #include FT_INTERNAL_POSTSCRIPT_HINTS_H
 #include FT_INTERNAL_SERVICE_H
-#include FT_INTERNAL_HASH_H
 #include FT_SERVICE_POSTSCRIPT_CMAPS_H
 
 
@@ -45,39 +44,36 @@ FT_BEGIN_HEADER
   /*************************************************************************/
 
 
-  /**************************************************************************
-   *
-   * @struct:
-   *   T1_EncodingRec
-   *
-   * @description:
-   *   A structure modeling a custom encoding.
-   *
-   * @fields:
-   *   num_chars ::
-   *     The number of character codes in the encoding.  Usually 256.
-   *
-   *   code_first ::
-   *     The lowest valid character code in the encoding.
-   *
-   *   code_last ::
-   *     The highest valid character code in the encoding + 1. When equal to
-   *     code_first there are no valid character codes.
-   *
-   *   char_index ::
-   *     An array of corresponding glyph indices.
-   *
-   *   char_name ::
-   *     An array of corresponding glyph names.
-   */
+  /*************************************************************************/
+  /*                                                                       */
+  /* <Struct>                                                              */
+  /*    T1_EncodingRec                                                     */
+  /*                                                                       */
+  /* <Description>                                                         */
+  /*    A structure modeling a custom encoding.                            */
+  /*                                                                       */
+  /* <Fields>                                                              */
+  /*    num_chars  :: The number of character codes in the encoding.       */
+  /*                  Usually 256.                                         */
+  /*                                                                       */
+  /*    code_first :: The lowest valid character code in the encoding.     */
+  /*                                                                       */
+  /*    code_last  :: The highest valid character code in the encoding     */
+  /*                  + 1. When equal to code_first there are no valid     */
+  /*                  character codes.                                     */
+  /*                                                                       */
+  /*    char_index :: An array of corresponding glyph indices.             */
+  /*                                                                       */
+  /*    char_name  :: An array of corresponding glyph names.               */
+  /*                                                                       */
   typedef struct  T1_EncodingRecRec_
   {
     FT_Int       num_chars;
     FT_Int       code_first;
     FT_Int       code_last;
 
-    FT_UShort*         char_index;
-    const FT_String**  char_name;
+    FT_UShort*   char_index;
+    FT_String**  char_name;
 
   } T1_EncodingRec, *T1_Encoding;
 
@@ -110,13 +106,12 @@ FT_BEGIN_HEADER
 
     FT_Int           num_subrs;
     FT_Byte**        subrs;
-    FT_UInt*         subrs_len;
-    FT_Hash          subrs_hash;
+    FT_PtrDist*      subrs_len;
 
     FT_Int           num_glyphs;
     FT_String**      glyph_names;       /* array of glyph names       */
     FT_Byte**        charstrings;       /* array of glyph charstrings */
-    FT_UInt*         charstrings_len;
+    FT_PtrDist*      charstrings_len;
 
     FT_Byte          paint_type;
     FT_Byte          font_type;
@@ -132,7 +127,7 @@ FT_BEGIN_HEADER
 
   typedef struct  CID_SubrsRec_
   {
-    FT_Int     num_subrs;
+    FT_UInt    num_subrs;
     FT_Byte**  code;
 
   } CID_SubrsRec, *CID_Subrs;
@@ -162,10 +157,10 @@ FT_BEGIN_HEADER
 
   typedef struct  AFM_KernPairRec_
   {
-    FT_UInt  index1;
-    FT_UInt  index2;
-    FT_Int   x;
-    FT_Int   y;
+    FT_Int  index1;
+    FT_Int  index2;
+    FT_Int  x;
+    FT_Int  y;
 
   } AFM_KernPairRec, *AFM_KernPair;
 
@@ -176,9 +171,9 @@ FT_BEGIN_HEADER
     FT_Fixed       Ascender;
     FT_Fixed       Descender;
     AFM_TrackKern  TrackKerns;   /* free if non-NULL */
-    FT_UInt        NumTrackKern;
+    FT_Int         NumTrackKern;
     AFM_KernPair   KernPairs;    /* free if non-NULL */
-    FT_UInt        NumKernPair;
+    FT_Int         NumKernPair;
 
   } AFM_FontInfoRec, *AFM_FontInfo;
 
@@ -209,6 +204,10 @@ FT_BEGIN_HEADER
     const void*     afm_data;
     FT_CharMapRec   charmaprecs[2];
     FT_CharMap      charmaps[2];
+
+#ifdef FT_CONFIG_OPTION_OLD_INTERNALS
+    PS_Unicodes     unicode_map;
+#endif
 
     /* support for Multiple Masters fonts */
     PS_Blend        blend;
@@ -254,7 +253,7 @@ FT_BEGIN_HEADER
 
 FT_END_HEADER
 
-#endif /* T1TYPES_H_ */
+#endif /* __T1TYPES_H__ */
 
 
 /* END */

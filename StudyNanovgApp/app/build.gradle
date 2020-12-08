@@ -18,8 +18,8 @@ android {
             cmake {
                 //编译标志问题导致 'undefined reference to XXX' -fno-rtti
                 //copy from bgfx
-                cppFlags "-std=c++14 -DFT2_BUILD_LIBRARY"
-                cFlags "-DFT2_BUILD_LIBRARY"
+                cppFlags "-std=c++11 -DFONS_USE_FREETYPE"
+                cFlags "-DFONS_USE_FREETYPE"
             }
         }
         ndk {
