@@ -6,12 +6,18 @@ set(LIB_DIR ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI})
 add_library(freetype SHARED IMPORTED)
 set_target_properties(freetype PROPERTIES IMPORTED_LOCATION ${LIB_DIR}/libfreetype.so)
 
-aux_source_directory(src/main/cpp SRC_nanovg)
+aux_source_directory(src/main/cpp/sample SRC_sample)
 
 add_library(
         nanovg
         SHARED
         src/main/cpp/nanovg.c
+)
+
+add_library(
+    study-nanovg
+    SHARED
+    ${SRC_sample}
 )
 
 find_library( # Sets the name of the path variable.
@@ -21,6 +27,11 @@ find_library( # Sets the name of the path variable.
         # you want CMake to locate.
         log)
 
+target_link_libraries(
+        study-nanovg
+        freetype
+        ${log-lib}
+)
 
 target_link_libraries(
         nanovg
