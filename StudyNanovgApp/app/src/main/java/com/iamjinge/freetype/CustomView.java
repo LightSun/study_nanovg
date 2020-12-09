@@ -52,10 +52,11 @@ public class CustomView extends View {
         this.pathExtractor.setTextSize(100);
         this.pathExtractor.getMetrics(this.m);
 
+        char str = '中';
         Log.d(TAG, "height " + this.m.height + ", " + this.m.ascender + ", " + this.m.descender);
-        boolean success = this.pathExtractor.extractPath('A', this.path, this.boxF);
+        boolean success = this.pathExtractor.extractPath(str, this.path, this.boxF);
 
-        StaticLayout layout = new StaticLayout("A", this.textPaint, 500, Alignment.ALIGN_NORMAL, 1.0F, 0.0F, false);
+        StaticLayout layout = new StaticLayout(str+"", this.textPaint, 500, Alignment.ALIGN_NORMAL, 1.0F, 0.0F, false);
         this.oBoxF.set(layout.getLineLeft(0), layout.getLineTop(0), layout.getLineRight(0), layout.getLineBottom(0));
         this.paint.getFontMetrics();
         Log.d(TAG, "" + layout.getLineAscent(0) + " and " + layout.getLineDescent(0) + " and " + layout.getLineBaseline(0));
@@ -73,7 +74,7 @@ public class CustomView extends View {
 
         canvas.save();
         canvas.translate(x, y);
-        canvas.drawText("A", 0.0F, (float) this.bLine + 0.0F, this.textPaint);
+        canvas.drawText("中", 0.0F, (float) this.bLine + 0.0F, this.textPaint);
         canvas.drawRect(this.oBoxF, this.paint);
         canvas.restore();
 
