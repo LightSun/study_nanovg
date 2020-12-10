@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.4.1)
 
-include_directories(src/main/cpp/freetype/include)
+#now use internal free type.
+#include_directories(src/main/cpp/freetype/include)
+include_directories(D:/study/github/THIRDS/harfbuzz-icu-freetype-master/freetype/include)
 
 set(LIB_DIR ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI})
 #add_library(freetype SHARED IMPORTED)
@@ -35,7 +37,7 @@ target_link_libraries(
         study-nanovg
         freetype
         harfbuzz
-        icucommon
+        #icucommon
         ${log-lib}
 )
 
