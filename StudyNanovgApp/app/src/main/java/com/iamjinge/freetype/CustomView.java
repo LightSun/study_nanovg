@@ -74,7 +74,7 @@ public class CustomView extends View {
 
         canvas.save();
         canvas.translate(x, y);
-        canvas.drawText("中", 0.0F, (float) this.bLine + 0.0F, this.textPaint);
+        //canvas.drawText("中", 0.0F, (float) this.bLine + 0.0F, this.textPaint);
         canvas.drawRect(this.oBoxF, this.paint);
         canvas.restore();
 

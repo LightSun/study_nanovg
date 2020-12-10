@@ -23,6 +23,25 @@ FreeTypeFace::FreeTypeFace(const FreeTypeLibrary &library, const char *filename)
 {
     error = FT_New_Face(library.m_ftLibrary, filename, 0, &m_ftFace);
     checkFT_Error(error, "new face");
+    FT_Select_Charmap(m_ftFace, FT_ENCODING_UNICODE);
+
+    //获取该字体文件所支持的编码类型
+    FT_CharMap charmap;
+    int encoding = 0;
+    for(int i = 0; i < m_ftFace->num_charmaps; i++)
+    {
+        charmap = m_ftFace->charmaps[i];
+        if(NULL != charmap)
+        {
+            encoding = charmap->encoding;
+
+            LOGD("charmap [%d] id: %c %c %c %c\n", encoding,
+                   (encoding>>24)&0xff,
+                   (encoding>>16)&0xff,
+                   (encoding>>8)&0xff,
+                   (encoding)&0xff);
+        }
+    }
 }
 
 FreeTypeFace::~FreeTypeFace()
@@ -149,6 +168,8 @@ int PathExtractor::MoveToFunction(const FT_Vector *to, void *user)
     jclass pathClass = jPath->env->GetObjectClass(jPath->path);
     jmethodID method = jPath->env->GetMethodID(pathClass, "moveTo", "(FF)V");
     jPath->env->CallVoidMethod(jPath->path, method, (float) x, (float) y);
+
+    LOGD("MoveToFunction: x = %d, y = %d", x, y);
     return 0;
 }
 
@@ -162,6 +183,8 @@ int PathExtractor::LineToFunction(const FT_Vector *to, void *user)
     jclass pathClass = jPath->env->GetObjectClass(jPath->path);
     jmethodID method = jPath->env->GetMethodID(pathClass, "lineTo", "(FF)V");
     jPath->env->CallVoidMethod(jPath->path, method, (float) x, (float) y);
+
+    LOGD("LineToFunction: x = %d, y = %d", x, y);
     return 0;
 }
 
@@ -175,6 +198,7 @@ int PathExtractor::ConicToFunction(const FT_Vector *control, const FT_Vector *to
     FT_Pos x = to->x;
     FT_Pos y = to->y;
 
+    LOGD("ConicToFunction: x = %d, y = %d", x, y);
     jclass pathClass = jPath->env->GetObjectClass(jPath->path);
     jmethodID method = jPath->env->GetMethodID(pathClass, "quadTo", "(FFFF)V");
     jPath->env->CallVoidMethod(jPath->path, method, (float) controlX, (float) controlY,
@@ -196,6 +220,7 @@ int PathExtractor::CubicToFunction(const FT_Vector *controlOne, const FT_Vector 
     FT_Pos x = to->x;
     FT_Pos y = to->y;
 
+    LOGD("CubicToFunction: x = %d, y = %d", x, y);
     jclass pathClass = jPath->env->GetObjectClass(jPath->path);
     jmethodID method = jPath->env->GetMethodID(pathClass, "cubicTo", "(FFFFFF)V");
     jPath->env->CallVoidMethod(jPath->path, method, (float) controlOneX, (float) controlOneY,
