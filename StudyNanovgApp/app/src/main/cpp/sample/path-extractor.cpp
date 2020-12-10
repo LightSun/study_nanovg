@@ -88,7 +88,27 @@ bool PathExtractor::extractPath(wchar_t wChar, JPath *jPath, FT_BBox *box)
 
     return decomposeOutline(jPath, box);
 }
+bool PathExtractor::extractPath(unsigned long ch, JPath *jPath, FT_BBox *box)
+{
+    if (!loadGlyph(ch)){
+        LOGW("loadGlyph failed. for %xd", ch);
+        return false;
+    }
 
+    if (!checkOutline())return false;
+
+    flipOutline();
+
+    return decomposeOutline(jPath, box);
+}
+bool PathExtractor::loadGlyph(unsigned long ch) {
+    FT_Error error;
+
+    FT_UInt glyph_index = FT_Get_Char_Index(m_face.m_ftFace, ch);
+    error = FT_Load_Glyph(m_face.m_ftFace, glyph_index, FT_LOAD_DEFAULT);
+    checkFT_Error(error, "load glyph");
+    return error == 0;
+}
 
 bool PathExtractor::loadGlyph(wchar_t wChar)
 {
@@ -97,7 +117,32 @@ bool PathExtractor::loadGlyph(wchar_t wChar)
     FT_UInt glyph_index = FT_Get_Char_Index(m_face.m_ftFace, static_cast<FT_ULong>(wChar));
     error = FT_Load_Glyph(m_face.m_ftFace, glyph_index, FT_LOAD_DEFAULT);
     checkFT_Error(error, "load glyph");
+    //print range
+    error = FT_Render_Glyph(m_face.m_ftFace->glyph,  FT_RENDER_MODE_NORMAL);
 
+    FT_Bitmap& bmp = m_face.m_ftFace->glyph->bitmap;
+    int h = bmp.rows;
+    int w = bmp.width;
+
+    char tmp[w * h];
+    char* a = tmp;
+    for(int i=0; i<h; i++)
+    {
+        for(int j=0; j<w; j++)
+        {
+            if((bmp.buffer[i * w  + j]) == 0 )
+            {
+                *(a++) = '0';
+            }
+            else
+            {
+                *(a++) = '1';
+            }
+        }
+        LOGD("%s", tmp);
+        memset(tmp, 0, w* h * sizeof(char));
+        a -= w;
+    }
     return error == 0;
 }
 

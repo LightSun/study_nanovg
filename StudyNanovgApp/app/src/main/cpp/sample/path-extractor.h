@@ -56,6 +56,8 @@ public:
 
     bool extractPath(wchar_t wChar, JPath *jPath, FT_BBox *box);
 
+    bool extractPath(unsigned long wChar, JPath *jPath, FT_BBox *box);
+
     static int MoveToFunction(const FT_Vector *to, void *user);
 
     static int LineToFunction(const FT_Vector *to, void *user);
@@ -67,6 +69,7 @@ public:
 
 private:
     bool loadGlyph(wchar_t wChar);
+    bool loadGlyph(unsigned long wChar);
 
     bool checkOutline();
 

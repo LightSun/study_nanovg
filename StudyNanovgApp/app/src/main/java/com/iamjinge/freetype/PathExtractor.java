@@ -60,7 +60,11 @@ public class PathExtractor {
         int[] box = new int[4];
         boolean exist = false;
         try {
-            exist = nExtractPath(nativePointer, content, path, box);
+            if(isChinese(content)){
+                exist = nExtractChPath(nativePointer, content, path, box);
+            }else {
+                exist = nExtractPath(nativePointer, content, path, box);
+            }
         } catch (Exception e) {
             Log.e(TAG, "extract path error " + content);
         }
@@ -81,10 +85,17 @@ public class PathExtractor {
         }
     }
 
+    private static boolean isChinese(char content) {
+        return String.valueOf(content).matches("[\\u4e00-\\u9fa5]+");
+    }
+
     @Override
     protected void finalize() throws Throwable {
         try {
-            nFinalize(nativePointer);
+            if(nativePointer != 0){
+                nFinalize(nativePointer);
+                nativePointer = 0;
+            }
         } finally {
             super.finalize();
         }
@@ -114,5 +125,9 @@ public class PathExtractor {
      * @param box left, bottom, right, top
      */
     private static native boolean nExtractPath(long nativePointer, char content, Path path, int[] box);
+    private static native boolean nExtractChPath(long nativePointer, int content, Path path, int[] box);
+
+    //todo not work
+    private static final native int toUcs2(char ch);
 
 }

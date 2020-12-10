@@ -1,16 +1,14 @@
 package com.heaven7.android.nanovg.app;
 
+import android.Manifest;
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-
 import com.heaven7.core.util.PermissionHelper;
 
-public class MainActivity extends AppCompatActivity {
+public class EntryAc extends AppCompatActivity {
 
     PermissionHelper mHelper = new PermissionHelper(this);
 
@@ -32,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onRequestPermissionResult(String s, int i, boolean b) {
                         if(b){
                             System.out.println("requestPermission ok");
-                            setContentView(R.layout.activity_main);
+                            setContentView(R.layout.activity_test);
                         }
                     }
                     @Override
@@ -40,9 +38,5 @@ public class MainActivity extends AppCompatActivity {
                         return false;
                     }
                 });
-    }
-
-    public void onClickTest(View view) {
-        startActivity(new Intent(this, EntryAc.class));
     }
 }
