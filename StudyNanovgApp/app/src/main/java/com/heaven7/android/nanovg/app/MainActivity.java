@@ -10,6 +10,17 @@ import android.view.View;
 
 import com.heaven7.core.util.PermissionHelper;
 
+/**
+ * ### FreeType
+ *
+ * * freetype工程地址: http://gitlab.alibaba-inc.com/gcanvas/freetype2_android
+ * * 打包配置:
+ *     * ndk-18
+ *     * c++_shared
+ *     * 打包产物: armeabi-v7a/arm64-v8a
+ *
+ *     https://github.com/tangrams/harfbuzz-icu-freetype
+ */
 public class MainActivity extends AppCompatActivity {
 
     PermissionHelper mHelper = new PermissionHelper(this);

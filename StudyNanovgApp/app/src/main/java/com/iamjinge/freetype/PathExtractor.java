@@ -7,6 +7,9 @@ import android.util.Log;
 
 import androidx.annotation.Keep;
 
+/**
+ * setlocal, 文件编码, freetype编码, ttf是否支持.
+ */
 public class PathExtractor {
     private static final String TAG = "PathExtractor";
 

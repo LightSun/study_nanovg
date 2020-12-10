@@ -23,7 +23,7 @@ FreeTypeFace::FreeTypeFace(const FreeTypeLibrary &library, const char *filename)
 {
     error = FT_New_Face(library.m_ftLibrary, filename, 0, &m_ftFace);
     checkFT_Error(error, "new face");
-    FT_Select_Charmap(m_ftFace, FT_ENCODING_UNICODE);
+    FT_Select_Charmap(m_ftFace,     ft_encoding_gb2312);
 
     //获取该字体文件所支持的编码类型
     FT_CharMap charmap;
@@ -107,6 +107,7 @@ bool PathExtractor::loadGlyph(unsigned long ch) {
     FT_UInt glyph_index = FT_Get_Char_Index(m_face.m_ftFace, ch);
     error = FT_Load_Glyph(m_face.m_ftFace, glyph_index, FT_LOAD_DEFAULT);
     checkFT_Error(error, "load glyph");
+
     return error == 0;
 }
 
