@@ -18,8 +18,12 @@ android {
             cmake {
                 //编译标志问题导致 'undefined reference to XXX' -fno-rtti
                 //copy from bgfx
-                cppFlags "-std=c++11 -DFONS_USE_FREETYPE"
+                cppFlags "-std=c++11 -DFONS_USE_FREETYPE "
                 cFlags "-DFONS_USE_FREETYPE"
+                /*  FT_CONFIG_OPTION_USE_HARFBUZZ
+                make
+                option(HB_HAVE_FREETYPE "Enable freetype interop helpers" ON)
+                option(HB_HAVE_ICU "Enable icu unicode functions" ON) */
             }
         }
         ndk {

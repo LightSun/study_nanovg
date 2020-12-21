@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.4.1)
 #include_directories(src/main/cpp/freetype/include)
 set(DIR_HALFBUZZ_FREETYPE F:/study/github/good/harfbuzz-icu-freetype-master)
 include_directories(${DIR_HALFBUZZ_FREETYPE}/freetype/include)
+include_directories(${DIR_HALFBUZZ_FREETYPE}/harfbuzz/src)
 
 set(LIB_DIR ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI})
 #add_library(freetype SHARED IMPORTED)
@@ -36,14 +37,17 @@ find_library( # Sets the name of the path variable.
 
 target_link_libraries(
         study-nanovg
-        freetype
         harfbuzz
+        freetype
         #icucommon
         ${log-lib}
 )
 
 target_link_libraries(
         nanovg
+        harfbuzz
         freetype
+        #icucommon
         ${log-lib}
 )
+

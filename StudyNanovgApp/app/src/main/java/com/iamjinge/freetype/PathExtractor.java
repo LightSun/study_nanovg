@@ -112,7 +112,7 @@ public class PathExtractor {
     }
 
     static {
-        System.loadLibrary("freetype");
+//        System.loadLibrary("freetype");
         System.loadLibrary("study-nanovg");
     }
 
