@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.4.1)
 
 #now use internal free type.
 #include_directories(src/main/cpp/freetype/include)
-set(DIR_HALFBUZZ_FREETYPE F:/study/github/good/harfbuzz-icu-freetype-master)
+#set(DIR_HALFBUZZ_FREETYPE F:/study/github/good/harfbuzz-icu-freetype-master)
+set(DIR_HALFBUZZ_FREETYPE D:/study/github/THIRDS/harfbuzz-icu-freetype-master)
 include_directories(${DIR_HALFBUZZ_FREETYPE}/freetype/include)
 include_directories(${DIR_HALFBUZZ_FREETYPE}/harfbuzz/src)
 
