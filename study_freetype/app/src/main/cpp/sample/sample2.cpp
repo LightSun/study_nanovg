@@ -374,7 +374,7 @@ genTGA(const char* fontfile, const char* tga)
         // Dump out a single glyph to a tga.
         WriteGlyphAsTGA(library,
                         tga,
-                        L'中',
+                        L'B', //TODO 中文有问题
                         face,
                         100,
                         Pixel32(255, 90, 30),
